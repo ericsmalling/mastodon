@@ -25,6 +25,7 @@
 /public/packs-test
 .env
 .env.production
+.env.secrets
 node_modules/
 /build/
 
