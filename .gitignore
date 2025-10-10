@@ -26,6 +26,7 @@
 stats.html
 .env
 .env.production
+.env.secrets
 node_modules/
 /build/
 
