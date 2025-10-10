@@ -14,6 +14,8 @@ services:
       - ./postgres14:/var/lib/postgresql/data
     environment:
       - 'POSTGRES_HOST_AUTH_METHOD=trust'
+      - 'POSTGRES_DB=mastodon_production'
+      - 'POSTGRES_USER=mastodon'
 
   redis:
     restart: always
@@ -61,7 +63,9 @@ services:
     # build: .
     image: ghcr.io/mastodon/mastodon:v4.4.4
     restart: always
-    env_file: .env.production
+    env_file:
+      - .env.production
+      - .env.secrets
     command: bundle exec puma -C config/puma.rb
     networks:
       - external_network
@@ -104,7 +108,9 @@ services:
     # build: .
     image: ghcr.io/mastodon/mastodon:v4.4.4
     restart: always
-    env_file: .env.production
+    env_file:
+      - .env.production
+      - .env.secrets
     command: bundle exec sidekiq
     depends_on:
       - db
