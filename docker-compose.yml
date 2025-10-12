@@ -187,8 +187,8 @@ configs:
       # Caddyfile for local Mastodon development with self-signed certificates
 
       www.bret.lol {
-      	# Generate self-signed certificate for local development
-	      tls internal
+        # Generate self-signed certificate for local development
+        tls internal
 
         # Reverse proxy to Mastodon web service
         reverse_proxy web:3000
@@ -200,10 +200,10 @@ configs:
         }
 
         # Security headers
-      	header {
-		      X-Frame-Options "SAMEORIGIN"
-		      X-Content-Type-Options "nosniff"
-		      X-XSS-Protection "1; mode=block"
-		      Strict-Transport-Security "max-age=31536000; includeSubDomains"
-	      }
+        header {
+          X-Frame-Options "SAMEORIGIN"
+          X-Content-Type-Options "nosniff"
+          X-XSS-Protection "1; mode=block"
+          Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        }
       }
