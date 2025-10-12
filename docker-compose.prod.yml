@@ -1,4 +1,5 @@
-# This file is designed for local testing
+# This file is designed for production server deployment, not local development work
+# For a containerized local dev environment, see: https://github.com/mastodon/mastodon/blob/main/docs/DEVELOPMENT.md#docker
 
 services:
   proxy:
@@ -184,11 +185,12 @@ volumes:
 configs:
   caddyfile:
     content: |
-      # Caddyfile for local Mastodon development with self-signed certificates
+      # Caddyfile for production Mastodon deployment
+      # Uses automatic HTTPS with Let's Encrypt for www.bret.today
 
-      www.bret.lol {
-      	# Generate self-signed certificate for local development
-	      tls internal
+      www.bret.today {
+        # Automatic HTTPS with Let's Encrypt (default behavior)
+        # No tls directive needed - Caddy handles it automatically
 
         # Reverse proxy to Mastodon web service
         reverse_proxy web:3000
@@ -196,14 +198,22 @@ configs:
         # Enable logging
         log {
           output stdout
-          level DEBUG
+          level INFO
         }
 
-        # Security headers
-      	header {
-		      X-Frame-Options "SAMEORIGIN"
-		      X-Content-Type-Options "nosniff"
-		      X-XSS-Protection "1; mode=block"
-		      Strict-Transport-Security "max-age=31536000; includeSubDomains"
-	      }
+        # Production security headers
+        header {
+          # Security headers
+          X-Frame-Options "DENY"
+          X-Content-Type-Options "nosniff"
+          X-XSS-Protection "1; mode=block"
+          Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+          Referrer-Policy "strict-origin-when-cross-origin"
+
+          # Remove server identification
+          -Server
+        }
+
+        # Enable compression
+        encode gzip zstd
       }
