@@ -35,10 +35,12 @@ jobs:
           - linux/amd64
           - linux/arm64
     steps:
-      - name: Prepare platform
+      - name: Prepare
         run: |
           platform=${{ matrix.platform }}
           echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
+          echo "REGISTRY_IMAGE=ghcr.io/${{ github.repository,, }}"
+          echo "REGISTRY_IMAGE=ghcr.io/${{ github.repository,, }}" >> $GITHUB_ENV
 
       - name: Login to GHCR
         uses: docker/login-action@v3.6.0
@@ -57,7 +59,7 @@ jobs:
         id: docker_meta
         uses: docker/metadata-action@v5.8.0
         with:
-          images: ghcr.io/${{ github.repository }}
+          images: ${{ env.REGISTRY_IMAGE }}
 
       - name: Build and push
         uses: docker/build-push-action@v6
@@ -67,7 +69,7 @@ jobs:
           # https://github.com/docker/build-push-action/blob/master/docs/advanced/cache.md#cache-backend-api
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          tags: ghcr.io/${{ github.repository }}
+          tags: ${{ env.REGISTRY_IMAGE }}
           labels: ${{ steps.docker_meta.outputs.labels }}
           # add attestations for provenance and sbom (bleeding edge BuildKit features)
           # NOTE: for now, this reults in `unknown/unknown` images in all registries but Hub
@@ -96,6 +98,11 @@ jobs:
     needs:
       - build-image
     steps:
+      - name: Prepare
+        run: |
+          echo "REGISTRY_IMAGE=ghcr.io/${{ github.repository,, }}"
+          echo "REGISTRY_IMAGE=ghcr.io/${{ github.repository,, }}" >> $GITHUB_ENV
+
       - name: Download digests
         uses: actions/download-artifact@v4
         with:
