@@ -39,8 +39,9 @@ jobs:
         run: |
           platform=${{ matrix.platform }}
           echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
-          echo "REGISTRY_IMAGE=ghcr.io/${{ github.repository,, }}"
-          echo "REGISTRY_IMAGE=ghcr.io/${{ github.repository,, }}" >> $GITHUB_ENV
+          image=${{ github.repository }}
+          echo "REGISTRY_IMAGE=ghcr.io/${image,,}"
+          echo "REGISTRY_IMAGE=ghcr.io/${image,,}" >> $GITHUB_ENV
 
       - name: Login to GHCR
         uses: docker/login-action@v3.6.0
@@ -100,8 +101,9 @@ jobs:
     steps:
       - name: Prepare
         run: |
-          echo "REGISTRY_IMAGE=ghcr.io/${{ github.repository,, }}"
-          echo "REGISTRY_IMAGE=ghcr.io/${{ github.repository,, }}" >> $GITHUB_ENV
+          image=${{ github.repository }}
+          echo "REGISTRY_IMAGE=ghcr.io/${image,,}"
+          echo "REGISTRY_IMAGE=ghcr.io/${image,,}" >> $GITHUB_ENV
 
       - name: Download digests
         uses: actions/download-artifact@v4
