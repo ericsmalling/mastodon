@@ -9,6 +9,37 @@
 # fail on error
 set -e
 
+# Check if domain argument is provided
+if [ -z "$1" ]; then
+  echo "Error: DNS name is required"
+  echo "Usage: $0 <domain-name>"
+  echo "Example: $0 www.bret.lol"
+  exit 1
+fi
+
+# Assign the first argument to LOCAL_DOMAIN
+LOCAL_DOMAIN="$1"
+echo "Using LOCAL_DOMAIN: $LOCAL_DOMAIN"
+
+##################################################
+# create .env file from sample and set values
+##################################################
+if [ ! -f .env ]; then
+  cp .env.production.sample .env
+
+  # Update LOCAL_DOMAIN to the provided domain
+  sed -i.bak "s/^LOCAL_DOMAIN=.*/LOCAL_DOMAIN=$LOCAL_DOMAIN/" .env
+
+  # Generate random 20 character password
+  DB_PASSWORD=$(openssl rand -base64 20 | tr -d "=+/" | cut -c1-20)
+
+  # Replace the value of DB_PASS with generated password
+  sed -i.bak "s/^# DB_PASS=.*/DB_PASS=$DB_PASSWORD/" .env
+
+  echo ".env file created and configured with LOCAL_DOMAIN=$LOCAL_DOMAIN and random DB password"
+fi
+
+
 #################################################
 # prep the db and create .env.secrets
 #################################################
@@ -53,7 +84,5 @@ docker compose run --rm web bundle exec rails db:prepare
 #################################################
 docker compose up -d
 
-echo "Mastodon should be up and running on https://www.bret.lol"
-# echo "Traefik Dashboard should be up and running on https://traefik.bret.lol"
-
+echo "Mastodon should be up and running on https://$LOCAL_DOMAIN"
 

@@ -186,7 +186,7 @@ configs:
     content: |
       # Caddyfile for local Mastodon development with self-signed certificates
 
-      www.bret.lol {
+       ${LOCAL_DOMAIN} {
         # Generate self-signed certificate for local development
         tls internal
 

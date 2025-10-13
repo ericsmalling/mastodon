@@ -1,14 +1,13 @@
 # This is an OVERRIDE compose file for production deployment
-# use it with this command (you also need default compose file):
-# docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+# run with: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 
 configs:
   caddyfile:
     content: |
       # Caddyfile for production Mastodon deployment
-      # Uses automatic HTTPS with Let's Encrypt for www.bret.today
+      # Uses automatic HTTPS with Let's Encrypt
 
-      www.bret.today {
+       ${LOCAL_DOMAIN}  {
         # Automatic HTTPS with Let's Encrypt (default behavior)
         # No tls directive needed - Caddy handles it automatically
 
