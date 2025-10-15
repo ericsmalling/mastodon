@@ -63,6 +63,7 @@ jobs:
           images: ${{ env.REGISTRY_IMAGE }}
 
       - name: Build and push
+        id: build
         uses: docker/build-push-action@v6
         with:
           platforms: ${{ matrix.platform }}
