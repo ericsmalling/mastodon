@@ -18,8 +18,6 @@ jobs:
 
   
     steps:
-      - name: Update digests
-        uses: chainguard-dev/digestabot@v1.2.3
-        id: digestabot
+      - uses: chainguard-dev/digestabot@v1.2.3        
         with:
           create-pr: true
