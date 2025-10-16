@@ -1,4 +1,23 @@
-- name: Update the image digest
+name: Image digest update
+
+on:
+  workflow_dispatch:
+  schedule:
+    # At the end of every day
+    - cron: "0 0 * * *"
+
+jobs:
+  image-update:
+    name: Image digest update
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write # to push the updates
+      pull-requests: write # to open Pull requests
+      id-token: write # used to sign the commits using gitsign
+
+  
+steps:
   # You may pin to the exact commit or the version.
   # uses: chainguard-dev/digestabot@a3b776c1ca57d3127c85578cde8fef6eed3c75d3
   uses: chainguard-dev/digestabot@v1.2.3
