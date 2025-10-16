@@ -42,11 +42,6 @@ steps:
     title-for-pr: # optional, default is Update images digests
     # The description of the pull request.
     description-for-pr: # optional, default is Update images digests
-
-```release-note
-NONE
-```
-
     # The message to use when committing changes.
     commit-message: # optional, default is Update images digests
     # Create a PR or just keep the changes locally.
