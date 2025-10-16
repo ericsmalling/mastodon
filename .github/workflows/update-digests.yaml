@@ -17,35 +17,9 @@ jobs:
       id-token: write # used to sign the commits using gitsign
 
   
-steps:
-  # You may pin to the exact commit or the version.
-  # uses: chainguard-dev/digestabot@a3b776c1ca57d3127c85578cde8fef6eed3c75d3
-  uses: chainguard-dev/digestabot@v1.2.3
-  with:
-    # Working directory to run the digestabot, to run in a specific path, if not set will run from the root
-    working-dir: # optional, default is .
-    # GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)
-    token: # default is ${{ github.token }}
-    # Add `Signed-off-by` line by the committer at the end of the commit log message.
-    signoff: # optional
-    # The author name and email address in the format `Display Name <email@address.com>`. Defaults to the user who triggered the workflow run.
-
-    author: # optional, default is ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
-    # The committer name and email address in the format `Display Name <email@address.com>`. Defaults to the GitHub Actions bot user.
-
-    committer: # optional, default is github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-    # A comma or newline separated list of labels to be used in the pull request.
-    labels-for-pr: # optional, default is automated pr, kind/cleanup, release-note-none
-    # The pull request branch name.
-    branch-for-pr: # optional, default is update-digests
-    # The title of the pull request.
-    title-for-pr: # optional, default is Update images digests
-    # The description of the pull request.
-    description-for-pr: # optional, default is Update images digests
-    # The message to use when committing changes.
-    commit-message: # optional, default is Update images digests
-    # Create a PR or just keep the changes locally.
-    create-pr: # optional, default is true
-    # Use gitsign to sign commits.
-    use-gitsign: # optional, default is true
-          
+    steps:
+      - name: Update digests
+        uses: chainguard-dev/digestabot@v1.2.3
+        id: digestabot
+        with:
+          create-pr: true
