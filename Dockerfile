@@ -13,7 +13,7 @@ ARG NODE_MAJOR_VERSION="24"
 # Debian image to use for base image, change with [--build-arg DEBIAN_VERSION="trixie"]
 ARG DEBIAN_VERSION="trixie"
 
-FROM cgr.dev/chainguard/ruby:latest@sha256:d80909b1854750d37cda5ebe0c23068188595ba1f8a645705dcab7205c2a6def AS ruby-prod
+FROM cgr.dev/chainguard/ruby:latest@sha256:4966f7fd761a7107ce8121709b3b9f42f2c2db8b0e491241843315ea8f0a56fa AS ruby-prod
 
 ARG MASTODON_VERSION_PRERELEASE=""
 ARG MASTODON_VERSION_METADATA=""
@@ -49,7 +49,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-o", "errexit", "-c"]
 
 ARG TARGETPLATFORM
 
-FROM cgr.dev/chainguard/ruby:latest-dev@sha256:1bf02c0d615921185500adbe9992623fea900fdb7b182446fad1a3c21987469b AS ruby-dev
+FROM cgr.dev/chainguard/ruby:latest-dev@sha256:312c265ed7f40d862bc43fa7fa14651d5e36e41ef5a0822d5a94b8768875a17c AS ruby-dev
 USER root
 
 # Linux UID (user id) for the mastodon user, change with [--build-arg UID=1234]
